@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>Wisata Pantai Virtual Reality Tour</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="./js/aframe/aframe-event-set-component.min.js"></script>
+    <script src="./js/aframe/aframe-layout-component.min.js"></script>
+    <script src="./js/aframe/aframe-template-component.min.js"></script>
+    <script src="./js/aframe/aframe-proxy-event-component.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-assets>
+            <audio id="click-sound" crossorigin="anonymous" src="./audio/click.mp3"></audio>
+            <img id="duta-01" crossorigin="anonymous" src="./assets/duta 1.png">
+            <img id="duta-02" crossorigin="anonymous" src="./assets/duta 2.png">
+            <img id="duta-03" crossorigin="anonymous" src="./assets/duta 3.png">
+            <img id="duta-04" crossorigin="anonymous" src="./assets/duta 4.png">
+            <img id="duta-05" crossorigin="anonymous" src="./assets/duta 5.png">
+            <img id="karang-01" crossorigin="anonymous" src="./assets/karang 1.png">
+            <img id="karang-02" crossorigin="anonymous" src="./assets/karang 2.png">
+            <img id="karang-03" crossorigin="anonymous" src="./assets/karang 3.png">
+            <img id="karang-04" crossorigin="anonymous" src="./assets/karang 4.png">
+            <img id="karang-05" crossorigin="anonymous" src="./assets/karang 5.png">
+            <img id="kelapa-01" crossorigin="anonymous" src="./assets/kelapa 1.png">
+            <img id="kelapa-02" crossorigin="anonymous" src="./assets/kelapa 2.png">
+            <img id="kelapa-03" crossorigin="anonymous" src="./assets/kelapa 3.png">
+            <img id="kelapa-04" crossorigin="anonymous" src="./assets/kelapa 4.png">
+            <img id="kelapa-05" crossorigin="anonymous" src="./assets/kelapa 5.png">
+            <img id="semukuk-01" crossorigin="anonymous" src="./assets/semukuk 1.png">
+            <img id="semukuk-02" crossorigin="anonymous" src="./assets/semukuk 2.png">
+            <img id="semukuk-03" crossorigin="anonymous" src="./assets/semukuk 3.png">
+            <img id="semukuk-04" crossorigin="anonymous" src="./assets/semukuk 4.png">
+            <img id="semukuk-05" crossorigin="anonymous" src="./assets/semukuk 5.png">
+
+
+            <!-- Image link template to be reused. -->
+            <script id="link" type="text/html">
+                <a-entity class="link" geometry="primitive: sphere; radius: 0.5; rotation: 90 0 90"
+                    material="shader: flat; src: ${thumb}" event-set__mouseenter="scale: 1.2 1.2 1"
+                    event-set__mouseleave="scale: 1 1 1"
+                    event-set__click="_target: #image-360; _delay: 300; material.src: ${src}"
+                    proxy-event="event: click; to: #image-360; as: fade" sound="on: click; src: #click-sound">
+                </a-entity>
+            </script>
+        </a-assets>
+
+        <!-- Camera + cursor. -->
+        <a-entity id="camera" camera look-controls>
+            <a-cursor id="cursor" position="0 0 -1" geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02;"
+                material="color: black; shader: flat" cursor="maxDistance: 30; fuse: true"
+                animation__click="property: scale; from: 0.5 0.5 0.5; to: 1 1 1;startEvents: click; dur: 150;easing:easeInQuad;"
+                animation__fusing="property: scale; from: 1 1 1; to: 0.5 0.5 0.5;startEvents: fusing; dur: 1000;easing:easeInQuad;"
+                event-set__mouseenter="_event: mouseenter; color: springgreen"
+                event-set__mouseleave="_event: mouseleave; color: black" raycaster="objects: .link"></a-cursor>
+        </a-entity>
+        <!-- 360-degree image. -->
+        <a-sky id="image-360" radius="10" src="#duta-01"
+            animation__fade="property: components.material.material.color; type: color; from: #FFF; to: #000; dur: 300; startEvents: fade"
+            animation__fadeback="property: components.material.material.color; type: color; from: #000; to: #FFF; dur: 300; startEvents: animationcomplete__fade">
+        </a-sky>
+
+        <!-- Image links. -->
+        <a-text value="Pantai duta" position="-5 -4 0.5" rotation="0 90 0"></a-text>
+        <a-entity id="links1" layout="type: line; margin: 1.5" position="-5 -3 1.5" rotation="-90 90 0">
+            <a-entity template="src: #link" data-src="#duta-01" data-thumb="#duta-01"></a-entity>
+            <a-entity template="src: #link" data-src="#duta-02" data-thumb="#duta-02"></a-entity>
+            <a-entity template="src: #link" data-src="#duta-03" data-thumb="#duta-03"></a-entity>
+            <a-entity template="src: #link" data-src="#duta-04" data-thumb="#duta-04"></a-entity>
+            <a-entity template="src: #link" data-src="#duta-05" data-thumb="#duta-05"></a-entity>
+
+        </a-entity>
+        <a-text value="Pantai karang" position="0 -4 -5" rotation="0 0 0"></a-text>
+        <a-entity id="links2" layout="type: line; margin: 1.5" position="-2 -3 -5" rotation="-90 0 0">
+            <a-entity template="src: #link" data-src="#karang-01" data-thumb="#karang-01"></a-entity>
+            <a-entity template="src: #link" data-src="#karang-02" data-thumb="#karang-02"></a-entity>
+            <a-entity template="src: #link" data-src="#karang-03" data-thumb="#karang-03"></a-entity>
+            <a-entity template="src: #link" data-src="#karang-04" data-thumb="#karang-04"></a-entity>
+            <a-entity template="src: #link" data-src="#karang-05" data-thumb="#karang-05"></a-entity>
+            
+        </a-entity>
+        <a-text value="Pantai kelapa position="5 -4 -0.5" rotation="0 -90 0"></a-text>
+        <a-entity id="links3" layout="type: line; margin: 1.5" position="5 -3 -1.5" rotation="-90 -90 0">
+            <a-entity template="src: #link" data-src="#kelapa-01" data-thumb="#kelapa-01"></a-entity>
+            <a-entity template="src: #link" data-src="#kelapa-02" data-thumb="#kelapa-02"></a-entity>
+            <a-entity template="src: #link" data-src="#kelapa-03" data-thumb="#kelapa-03"></a-entity>
+            <a-entity template="src: #link" data-src="#kelapa-04" data-thumb="#kelapa-04"></a-entity>
+            <a-entity template="src: #link" data-src="#kelapa-05" data-thumb="#kelapa-05"></a-entity>
+        </a-entity>
+
+        <a-text value="Pantai semukuk" position="0 -1 5" rotation="0 180 0"></a-text>
+        <a-entity id="links4" layout="type: line; margin: 1.5" position="0 0 5" rotation="-90 180 0">
+            <a-entity template="src: #link" data-src="#semukuk-01" data-thumb="#semukuk-01"></a-entity>
+            <a-entity template="src: #link" data-src="#semukuk-02" data-thumb="#semukuk-02"></a-entity>
+            <a-entity template="src: #link" data-src="#semukuk-03" data-thumb="#semukuk-03"></a-entity>
+            <a-entity template="src: #link" data-src="#semukuk-04" data-thumb="#semukuk-04"></a-entity>
+            <a-entity template="src: #link" data-src="#semukuk-05" data-thumb="#semukuk-05"></a-entity>
+
+
+        </a-entity>
+        <a-sound src="#click-sound" autoplay="true" loop="false" position="0 2 -5"></a-sound>
+    </a-scene>
+</body>
+
+</html>
